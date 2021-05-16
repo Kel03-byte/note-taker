@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express()
-const port = 8000
+const port = process.env.PORT || 8000
 const path = require('path')
 const id = require('nanoid');
 
@@ -35,13 +35,13 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-app.delete('/api/notes:id', (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
     const deleteNote = req.params.id
 
     fs.readFile('./db/db.json', (error, data) => {
         if (error) throw error;
         let noteArray = JSON.parse(data)
-        newNoteArray = noteArray.filter((note) => note.id !== deleteNote)
+        const newNoteArray = noteArray.filter((note) => note.id !== deleteNote)
 
         fs.writeFile("./db/db.json",
             JSON.stringify(newNoteArray),
