@@ -4,10 +4,10 @@ A very handy note taker and task planner to help keep you on track!
 
 ## Screenshot
 
-![image]
+![image](./screenshots/screenshot1.png)
 
 ## Usage
 
-* Github: 
-* Deployed Website:
+* Github: https://github.com/Kel03-byte/note-taker
+* Deployed Website: https://kellies-note-taker.herokuapp.com/
 
