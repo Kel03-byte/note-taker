@@ -9,5 +9,5 @@ A very handy note taker and task planner to help keep you on track!
 ## Usage
 
 * Github: https://github.com/Kel03-byte/note-taker
-* Deployed Website: https://kellies-note-taker.herokuapp.com/
+* Deployed Website: https://blooming-brook-63473.herokuapp.com/
 
