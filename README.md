@@ -46,4 +46,4 @@ Otherwise just click on the 'deployed website' link in the Links Section to use 
 ## Screenshots
 
 * Screenshot of the Deployed Website:
-![Screenshot](/images/screenshot.png)
+![Screenshot](/images/screenshot1.png)
