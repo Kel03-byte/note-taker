@@ -8,60 +8,51 @@ const id = require('nanoid');
 
 // Middleware functions that parse the response into json and serve
 // static (all ready built) files
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(express.static('./public'))
 
-// Function to send the "index.html" file when the request is made to the server
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, './public/index.html')));
-
 // Function to send the "notes.html" file when the request is made to the server (through a click event)
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './public/notes.html')));
+app.get('/notes', (request, response) => response.sendFile(path.join(__dirname, './public/notes.html')));
 
 // Function that gets the "db.json" file
-app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, './db/db.json')));
+app.get('/api/notes', (request, response) => response.sendFile(path.join(__dirname, './db/db.json')));
 
-// Function that sends the newly created note to the sever body with an unique id
-app.post('/api/notes', (req, res) => {
-    newnote = req.body;
-    req.body.id = id.nanoid(10);
-    console.log(newnote)
+// Function that writes a newly created Note to an Array
+app.post('/api/notes', (request, response) => {
+    let newnote = request.body
+    request.body.id = id.nanoid(10);
 
-    // Function to get the "db.json" file and saves the new note to the array in the file
-    fs.readFile('./db/db.json', (error, data) => {
-        if (error) throw error;
-        let noteArray = JSON.parse(data)
-        noteArray.push(newnote)
+    fs.readFile(path.join(__dirname, './db/db.json'), (error, response) => {
+        if (error) throw error
+        let noteArray = JSON.parse(response)
+        noteArray.push(newnote);
 
-        
-        fs.writeFile(
-            "./db/db.json",
-            JSON.stringify(noteArray),
-            function (error) {
-                if (error) throw error;
-                console.log("The Note was saved!");
-            }
-        )
+        fs.writeFile(path.join(__dirname, './db/db.json'), JSON.stringify(noteArray), (error) => {
+            if (error) throw error
+        })
     })
+    response.end()
 })
 
 // Function to delete the saved note from the Array
-app.delete('/api/notes/:id', (req, res) => {
-    const deleteNote = req.params.id
+app.delete('/api/notes/:id', (request, response) => {
+    const deleteNote = request.params.id;
 
-    fs.readFile('./db/db.json', (error, data) => {
-        if (error) throw error;
-        let noteArray = JSON.parse(data)
+    fs.readFile('./db/db.json', (error, response) => {
+        if (error) throw error
+        let noteArray = JSON.parse(response)
         const newNoteArray = noteArray.filter((note) => note.id !== deleteNote)
 
-        fs.writeFile("./db/db.json",
-            JSON.stringify(newNoteArray),
-            function (error) {
-                if (error) throw error;
-                console.log("The Note was deleted!")
-            })
-
+        fs.writeFile(path.join(__dirname, './db/db.json'), JSON.stringify(newNoteArray), (error) => {
+            if (error) throw error
+        })
     })
+    response.end()
 })
+
+// Function to send the "index.html" file when the request is made to the server
+app.get('/', (request, response) => response.sendFile(path.join(__dirname, './public/index.html')));
 
 // Lets us know that the server is repsonding and what port number it is repsonding on
 app.listen(port, () => console.log(`I'm listening on port ${port}!`));
