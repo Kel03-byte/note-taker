@@ -1,16 +1,3 @@
-
-## Description
-
-
-## Screenshot
-
-![image](/images/screenshot1.png)
-
-## Usage
-
-
-
-
 # Note Taker
 
 ![license](https://img.shields.io/badge/License-MIT-blue.svg)
